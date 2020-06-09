@@ -19,22 +19,9 @@ class App extends Component {
     searchedMovies: [],
   };
 
-  showSearchResult = (searchString) => {
-    console.log(searchString);
-    fetch(url + "&s=" + searchString)
-      .then((response) => response.json())
-      .then((responseObject) => {
-        console.log(responseObject);
-        if (responseObject.Response === "True") {
-          this.setState({ searchedMovies: responseObject.Search });
-        }
-      });
-  };
-
   render() {
     return (
       <Router>
-        <Navbar showSearchResult={this.showSearchResult} />
         <Switch>
           {routes.map((route) => {
             return (
@@ -44,10 +31,7 @@ class App extends Component {
                 render={(props) => {
                   return (
                     <route.layout {...props}>
-                      <route.component
-                        {...props}
-                        searchedMovies={this.state.searchedMovies}
-                      />
+                      <route.component {...props} />
                     </route.layout>
                   );
                 }}

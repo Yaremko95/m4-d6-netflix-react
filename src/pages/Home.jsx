@@ -15,9 +15,24 @@ class Home extends Component {
       comments: [],
     };
     console.log(props);
+    this.url = "http://www.omdbapi.com/?i=tt3896198&apikey=ac60feab";
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.query !== this.props.query) {
+      this.showSearchResult(this.props.query);
+    }
   }
 
-  url = "http://www.omdbapi.com/?i=tt3896198&apikey=ac60feab";
+  showSearchResult = (searchString) => {
+    fetch(this.url + "&s=" + searchString)
+      .then((response) => response.json())
+      .then((responseObject) => {
+        console.log(responseObject);
+        if (responseObject.Response === "True") {
+          this.setState({ searchedMovies: responseObject.Search });
+        }
+      });
+  };
 
   componentDidMount = () => {
     Promise.all([

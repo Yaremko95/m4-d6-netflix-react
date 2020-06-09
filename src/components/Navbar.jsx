@@ -11,15 +11,12 @@ class NetflixNavbar extends Component {
   }
 
   searchStringHandler = (e) => {
-    if (e.keyCode === 13) {
-      // WHEN ENTER KEY IS PRESSED
-      this.props.showSearchResult(this.state.searchString);
-    } else {
-      this.setState({ searchString: e.currentTarget.value });
-      //console.log(this.state.searchString);
-    }
+    this.setState({ searchString: e.target.value });
   };
-
+  onSearch = () => {
+    const { searchString } = this.state;
+    this.props.onSearch && this.props.onSearch(searchString);
+  };
   render() {
     return (
       <Navbar variant="dark" expand="lg" style={{ backgroundColor: "#221f1f" }}>
@@ -55,7 +52,7 @@ class NetflixNavbar extends Component {
                 placeholder="Search and press enter"
                 aria-label="search"
                 aria-describedby="basic-addon1"
-                onKeyDown={this.searchStringHandler}
+                onKeyDown={(e) => e.key === "Enter" && this.onSearch()}
                 onChange={this.searchStringHandler}
                 value={this.state.searchString}
               />
