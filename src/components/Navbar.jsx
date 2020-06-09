@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Navbar, Nav, InputGroup, FormControl } from "react-bootstrap";
+import { withGlobalState } from "react-globally";
 
 class NetflixNavbar extends Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class NetflixNavbar extends Component {
       this.props.showSearchResult(this.state.searchString);
     } else {
       this.setState({ searchString: e.currentTarget.value });
+      //console.log(this.state.searchString);
     }
   };
 
