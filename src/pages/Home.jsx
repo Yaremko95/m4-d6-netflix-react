@@ -15,7 +15,7 @@ class Home extends Component {
       comments: [],
     };
     console.log(props);
-    this.url = "http://www.omdbapi.com/?i=tt3896198&apikey=ac60feab";
+    this.url = "https://strive-netflix-api.herokuapp.com/media/search?s=Harry";
   }
   componentDidUpdate(prevProps) {
     if (prevProps.query !== this.props.query) {
@@ -39,22 +39,23 @@ class Home extends Component {
       this.showSearchResult(this.props.query);
     }
     Promise.all([
-      fetch(this.url + "&s=harry%20potter")
+      fetch(this.url )
         .then((response) => response.json())
         .then((responseObject) => {
+          console.log("object", responseObject);
           this.setState({ harryPotterMovies: responseObject.Search });
-          console.log(this.state.harryPotterMovies);
+
         }),
-      fetch(this.url + "&s=spider%20man")
-        .then((response) => response.json())
-        .then((responseObject) =>
-          this.setState({ spiderManMovies: responseObject.Search })
-        ),
-      fetch(this.url + "&s=star%20wars")
-        .then((response) => response.json())
-        .then((responseObject) =>
-          this.setState({ starWarsMovies: responseObject.Search })
-        ),
+      // fetch(this.url + "s=spider")
+      //   .then((response) => response.json())
+      //   .then((responseObject) =>
+      //     this.setState({ spiderManMovies: responseObject })
+      //   ),
+      // fetch(this.url + "s=star")
+      //   .then((response) => response.json())
+      //   .then((responseObject) =>
+      //     this.setState({ starWarsMovies: responseObject })
+      //   ),
     ])
       .then(() => this.setState({ loading: false }))
       .catch((err) => {
@@ -109,7 +110,7 @@ class Home extends Component {
                 <Gallery
                   title="Harry Potter"
                   loading={this.state.loading}
-                  movies={this.state.harryPotterMovies.slice(0, 6)}
+                  movies={this.state.harryPotterMovies}
                 />
                 <Gallery
                   title="Spider Man"
